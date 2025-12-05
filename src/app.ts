@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import initDB from './config/db';
 import { userRoutes } from './modules/user/user.routes';
+import { authRouters } from './modules/auth/auth.routes';
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.get('/', (req: Request, res: Response) => {
 
 //user
 app.use('/users', userRoutes);
+
+//authentication
+app.use('/auth' , authRouters);
 
 // handle 404 errors
 app.use((req: Request, res: Response) => {
