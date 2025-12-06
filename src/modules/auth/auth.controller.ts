@@ -7,7 +7,7 @@ const signUp = async (req: Request, res: Response) => {
     const result = await authServices.signUp(req.body);
     res.status(201).json({
       success: true,
-      message: 'User created successfully',
+      message: 'User registered successfully',
       data: result.rows[0],
     });
   } catch (error) {
@@ -25,7 +25,7 @@ const signIn = async (req: Request, res: Response) => {
        const result = await authServices.signIn(req.body);
        res.status(200).json({
         success: true,
-        message: 'User login successfully',
+        message: 'Login successful',
         data: result,
       });
     }catch (error:any) {

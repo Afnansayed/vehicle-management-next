@@ -17,10 +17,10 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 //user
-app.use('/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
 
 //authentication
-app.use('/auth' , authRouters);
+app.use('/api/v1/auth' , authRouters);
 
 // handle 404 errors
 app.use((req: Request, res: Response) => {
