@@ -26,7 +26,7 @@ const initDB = async () => {
       daily_rent_price NUMERIC(10,2) NOT NULL CHECK (daily_rent_price > 0),
       availability_status VARCHAR(10) NOT NULL CHECK (availability_status IN ('available', 'booked'))
       )
-      `)
+      `);
 };
 
 export default initDB;

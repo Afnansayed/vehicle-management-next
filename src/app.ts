@@ -24,7 +24,7 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth' , authRouters);
 
 //Vehicle routes
-app.use('/api/v1/vehicle' , vehicleRoutes);
+app.use('/api/v1/vehicles' , vehicleRoutes);
 
 // handle 404 errors
 app.use((req: Request, res: Response) => {
