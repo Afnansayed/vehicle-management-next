@@ -35,7 +35,7 @@ const signIn = async (payload: Record<string, unknown>) => {
   if (!match) throw new Error('Password not match!');
 
   const token = jwt.sign(
-    { name: user.name, email: user.email, role: user.role },
+    { name: user.name, email: user.email, role: user.role , id: user.id},
     config.jwt_secret as string,
     {
       expiresIn: '7d',

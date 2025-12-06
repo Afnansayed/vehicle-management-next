@@ -20,10 +20,17 @@ const getUsers = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   try {
-      const result = await  userService.updateUser( req.body ,req.params.userId as string);
+      if (!req.user) {
+        return res.status(401).json({
+          success: false,
+          message: 'Unauthorized'
+        });
+      }
+      
+      const result = await  userService.updateUser( req.body , req.params.userId as string , req.user);
       res.status(200).json({
         success: true,
-        message: 'User update successfully',
+        message: 'User updated successfully',
         data: result.rows[0],
       });
     } catch (error:any) {
