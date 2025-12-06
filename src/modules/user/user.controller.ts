@@ -18,6 +18,26 @@ const getUsers = async (req: Request, res: Response) => {
   }
 }
 
+const updateUser = async (req: Request, res: Response) => {
+  try {
+      const result = await  userService.updateUser( req.body ,req.params.userId as string);
+      res.status(200).json({
+        success: true,
+        message: 'User update successfully',
+        data: result.rows[0],
+      });
+    } catch (error:any) {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        message: error.message ||'Internal Server Error',
+        error: error,
+      });
+    }
+  
+  }
+
 export const userController = {
-  getUsers
+  getUsers,
+  updateUser
 };
