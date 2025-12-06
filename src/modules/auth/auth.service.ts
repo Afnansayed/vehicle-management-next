@@ -3,6 +3,20 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../../config';
 
+
+const signUp = async (payload: Record<string, any>) => {
+  const { name, email , password, phone , role } = payload;
+
+  const hashPass = await bcrypt.hash(password, 10);
+
+  const result = await pool.query(
+    `INSERT INTO users (name, email, password, phone, role) VALUES ($1, $2,$3,$4,$5) RETURNING *`,
+    [name, email, hashPass, phone, role]
+  );
+  return result;
+};
+
+
 const signIn = async (payload: Record<string, unknown>) => {
   const { email, password } = payload;
 
@@ -12,14 +26,11 @@ const signIn = async (payload: Record<string, unknown>) => {
   );
 
   const user = getUserByEmail.rows[0];
-  console.log(user);
-
   if (!user) {
     throw new Error('User not found!');
   }
 
   const match = await bcrypt.compare(password as string, user.password);
-  console.log(match);
 
   if (!match) throw new Error('Password not match!');
 
@@ -39,4 +50,5 @@ const signIn = async (payload: Record<string, unknown>) => {
 
 export const authServices = {
   signIn,
+  signUp,
 };

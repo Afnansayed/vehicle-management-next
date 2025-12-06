@@ -2,6 +2,24 @@ import { Request, Response } from "express";
 import { authServices } from "./auth.service";
 
 
+const signUp = async (req: Request, res: Response) => {
+  try {
+    const result = await authServices.signUp(req.body);
+    res.status(201).json({
+      success: true,
+      message: 'User created successfully',
+      data: result.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+      error: error,
+    });
+  }
+};
+
+
 const signIn = async (req: Request, res: Response) => {
     try{
        const result = await authServices.signIn(req.body);
@@ -21,5 +39,6 @@ const signIn = async (req: Request, res: Response) => {
   }
 
 export const authController = {
-    signIn
+    signIn,
+    signUp
 }  
