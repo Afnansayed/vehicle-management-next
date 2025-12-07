@@ -28,7 +28,7 @@ app.use('/api/v1/auth' , authRouters);
 app.use('/api/v1/vehicles' , vehicleRoutes);
 
 //bookings 
-app.use('/api/v1/booking' , bookingRouters);
+app.use('/api/v1/bookings' , bookingRouters);
 
 // handle 404 errors
 app.use((req: Request, res: Response) => {
