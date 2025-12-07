@@ -13,8 +13,6 @@ const updateUser = async (payload: Record<string, any>, userId: string, userInfo
   if (jwtUserRole !== "admin" && jwtId !== Number(userId)) {
     throw new Error("You can only update your own profile");
   }
-
-  // 2. If not admin, don't allow role change
   if (jwtUserRole !== "admin" && role !== undefined) {
     throw new Error("Only admin can change user role");
   }
