@@ -19,6 +19,24 @@ const createBooking = async (req: Request, res: Response) => {
     }
   };
 
+  const getBookings = async (req: Request, res: Response) => {
+    try {
+      const result = await bookingService.getBookings(req?.user?.role , req?.user?.id);
+      res.status(200).json({
+        success: true,
+        message: 'Booking derived successfully',
+        data: result.rows,
+      });
+    } catch (error:any) {
+      res.status(500).json({
+        success: false,
+        message: error.message ||'Internal Server Error',
+        error: error,
+      });
+    }
+  };
+
 export const bookingController ={
-    createBooking
+    createBooking,
+    getBookings
 }  

@@ -29,10 +29,27 @@ const createBooking =async (payload:Record<string,any>) => {
          await pool.query(`UPDATE vehicles SET availability_status=$1 WHERE id=$2`,['booked',vehicle_id])
     }
     return result;
-    
 }
 
 
+//* get 
+const getBookings= async(jwtRole: string, jwtId:number) => {
+      let result ;
+      if(jwtRole === 'customer'){
+        result = await pool.query(`SELECT * FROM bookings WHERE customer_id=$1`,[jwtId]);
+        if(result.rows.length <= 0){
+          throw new Error('No booking avilable.!')
+        }
+      }else{
+        result = await pool.query(`SELECT * FROM bookings`);
+      }
+
+      return result;
+}
+
+
+
 export const bookingService = {
-    createBooking
+    createBooking,
+    getBookings
 }
