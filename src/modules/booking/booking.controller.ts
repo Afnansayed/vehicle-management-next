@@ -36,7 +36,25 @@ const createBooking = async (req: Request, res: Response) => {
     }
   };
 
+  const updateBooking = async (req: Request, res: Response) => {
+    try {
+      const result = await bookingService.updateStatus(req?.user?.role , req?.user?.id , req.params.bookingId as string, req.body);
+      res.status(200).json({
+        success: true,
+        message: 'Booking status updated successfully',
+        data: result?.rows[0],
+      });
+    } catch (error:any) {
+      res.status(500).json({
+        success: false,
+        message: error.message ||'Internal Server Error',
+        error: error,
+      });
+    }
+  };
+
 export const bookingController ={
     createBooking,
-    getBookings
+    getBookings,
+    updateBooking
 }  
