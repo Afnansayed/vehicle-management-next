@@ -44,7 +44,29 @@ const updateUser = async (req: Request, res: Response) => {
   
   }
 
+  const deleteUser = async (req: Request, res: Response) => {
+    try {
+ 
+        
+        const result = await  userService.deleteUser(req.params.userId as string);
+        res.status(200).json({
+          success: true,
+          message: 'User deleted successfully',
+          data: result.rows[0],
+        });
+      } catch (error:any) {
+        console.log(error);
+        res.status(500).json({
+          success: false,
+          message: error.message ||'Internal Server Error',
+          error: error,
+        });
+      }
+    
+    }
+
 export const userController = {
   getUsers,
-  updateUser
+  updateUser,
+  deleteUser
 };

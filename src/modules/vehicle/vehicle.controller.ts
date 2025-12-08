@@ -77,10 +77,30 @@ const getVehicles = async (req: Request, res: Response) => {
             
             }
 
+            const deleteVehicle = async (req: Request, res: Response) => {
+              try {
+                  const result = await  vehicleService.deleteVehicle(req.params.vehicleId as string);
+                  res.status(200).json({
+                    success: true,
+                    message: 'Vehicle deleted successfully',
+                    data: result.rows[0],
+                  });
+                } catch (error:any) {
+                  console.log(error);
+                  res.status(500).json({
+                    success: false,
+                    message: error.message ||'Internal Server Error',
+                    error: error,
+                  });
+                }
+              
+              }
+
 
 export const vehicleController = {
     createVehicle,
     getVehicles,
     getVehicleById,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
 }

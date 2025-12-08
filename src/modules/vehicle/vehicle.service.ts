@@ -83,9 +83,26 @@ const updateVehicle = async (
   return result;
 };
 
+//* delete
+const deleteVehicle = async(vehicleId:string) => {
+  let result ;
+     const bookings = await pool.query(`SELECT * FROM bookings WHERE vehicle_id=$1`,[vehicleId]);
+     if(bookings.rows.length === 0){
+       result =  await pool.query(`DELETE FROM vehicles WHERE id=$1 RETURNING *`,[vehicleId]);
+     }
+     const isActive = bookings.rows.some(booking => booking.status === 'active');
+    //  console.log({bookings: bookings?.rows ,isActive});
+     if(isActive) throw new Error('Booking status is active! you are not able to delete this vehicle until booking status (active)')
+
+     result =  await pool.query(`DELETE FROM vehicles WHERE id=$1 RETURNING *`,[vehicleId]);
+
+     return result;
+}
+
 export const vehicleService = {
   createVehicle,
   getVehicles,
   getVehicleById,
   updateVehicle,
+  deleteVehicle
 };
