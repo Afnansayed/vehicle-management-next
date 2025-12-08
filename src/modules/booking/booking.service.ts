@@ -1,5 +1,30 @@
 import { pool } from "../../config/db";
 
+
+const expiredCheck = async () => {
+  const allBookings = await pool.query(`SELECT * FROM bookings`);
+  if (allBookings.rows.length === 0) {
+    console.log('No bookings found');
+    return;
+  }
+
+  const today = new Date();
+  for (const booking of allBookings.rows) {
+    const endDate = new Date(booking.rent_end_date);
+    if (booking.status === 'active' && endDate < today) {
+      await pool.query(
+        `UPDATE bookings SET status = $1 WHERE id = $2`,
+        ['returned', booking.id]
+      );
+      // -- -- //
+      await pool.query(
+        `UPDATE vehicles SET availability_status = $1 WHERE id = $2`,
+        ['available', booking.vehicle_id]
+      );
+    }
+  }
+};
+
 const calculateDays = (start: string, end: string): number => {
   return Math.ceil(
     (new Date(end).getTime() - new Date(start).getTime()) /
@@ -49,6 +74,8 @@ const createBooking = async (payload: Record<string, any>) => {
 
 //* get
 const getBookings = async (jwtRole: string, jwtId: number) => {
+   await expiredCheck();
+
   let result;
   if (jwtRole === "customer") {
     result = await pool.query(`SELECT * FROM bookings WHERE customer_id=$1`, [

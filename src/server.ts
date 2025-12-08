@@ -4,5 +4,5 @@ import config from './config';
 const port = config.port;
 
 app.listen(port, () => {
-  console.log(`Boiler app listening on port ${port}`);
+  console.log(`Vehicle management app listening on port ${port}`);
 });
