@@ -1,8 +1,7 @@
 # In your project directory
-echo "# Project Name: Backend API with Authentication
-
+echo "# Project Name: vehicle-management-next
 ## Live URL
-[Add your live URL here once deployed]
+[https://vehicle-management-next.vercel.app/]
 
 ## Features
 - User registration and authentication
@@ -22,17 +21,17 @@ echo "# Project Name: Backend API with Authentication
 ## Setup & Usage Instructions
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v24 or higher)
 - PostgreSQL database
 - npm or yarn package manager
 
 ### Installation
 
 1. **Clone the repository:**
-   \`\`\`bash
+   ```bash
    git clone [your-repository-url]
    cd [project-directory]
-   \`\`\`
+   ```
 
 2. **Install dependencies:**
    \`\`\`bash
