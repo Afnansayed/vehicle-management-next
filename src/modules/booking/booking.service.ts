@@ -55,7 +55,7 @@ const getBookings = async (jwtRole: string, jwtId: number) => {
       jwtId,
     ]);
     if (result.rows.length <= 0) {
-      throw new Error("No booking avilable.!");
+      throw new Error("No booking available!");
     }
   } else {
     result = await pool.query(`SELECT * FROM bookings`);
@@ -103,6 +103,10 @@ const updateStatus = async (
       `UPDATE bookings SET status=$1 WHERE id=$2 RETURNING *`,
       [status, bookingId]
     );
+  }
+
+  if(result?.rows.length){
+    await pool.query(`UPDATE vehicles SET availability_status=$1 WHERE id=$2`,['available', bookingDetails.rows[0].vehicle_id])
   }
 
   return result;
